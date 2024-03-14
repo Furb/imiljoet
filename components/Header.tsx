@@ -7,7 +7,7 @@ const Header = () => {
       <h1 className='uppercase text-4xl md:text-[8vw] md:tracking-wider leading-none'>
         kontorkollektiv
       </h1>
-      <p>kontor@i-miljoet.com</p>
+      <button>kontor@i-miljoet.com</button>
     </header>
   );
 };
