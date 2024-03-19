@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef } from "react";
 import {
   Inject,
   Day,
@@ -6,6 +7,7 @@ import {
   Resize,
   DragAndDrop,
   ScheduleComponent,
+  EventSettingsModel,
   ResourcesDirective,
   ResourceDirective,
   TimelineViews,
@@ -16,8 +18,10 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
-import { L10n } from "@syncfusion/ej2-base";
+import { L10n, loadCldr } from "@syncfusion/ej2-base";
 import { Internationalization } from "@syncfusion/ej2-base";
+import { meetingRoomBookingData } from "@/lib/datasource";
+import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
 
 L10n.load({
   "en-US": {
@@ -31,42 +35,21 @@ L10n.load({
 });
 
 const Schedule = () => {
-  const fieldsData = {
-    id: "Id",
-    subject: { name: "Subject", title: "Hvem" },
-    endTime: { name: "EndTime", title: "Slut" },
-  };
-
-  const data = [
-    {
-      Id: 1,
-      Subject: "Dont waste it",
-      StartTime: new Date(2024, 3, 15, 10, 0),
-      EndTime: new Date(2024, 3, 16, 12, 30),
-      IsAllDay: false,
-    },
-    {
-      Id: 2,
-      Subject: "Green survey",
-      StartTime: new Date(2018, 1, 15, 10, 0),
-      EndTime: new Date(2018, 1, 15, 12, 30),
-      IsAllDay: false,
-      Status: "Completed",
-      Priority: "High",
-    },
-  ];
-
   const roomData = [
     { RoomText: "Lille rum", Id: 1, RoomColor: "#ffaa00" },
     { RoomText: "Stor rum", Id: 2, RoomColor: "#f8a398" },
     { RoomText: "Frokost rum", Id: 3, RoomColor: "#7499e1" },
   ];
 
+  const eventSettings: EventSettingsModel = {
+    dataSource: meetingRoomBookingData,
+  };
+
   return (
     <ScheduleComponent
       startHour='07:00'
-      eventSettings={{ dataSource: data, fields: fieldsData }}
       currentView='Week'
+      eventSettings={eventSettings}
     >
       <ViewsDirective>
         <ViewDirective option='Day' />
@@ -76,7 +59,7 @@ const Schedule = () => {
       <ResourcesDirective>
         <ResourceDirective
           field='RoomId'
-          title='Vælg lokale'
+          title='Choose meeting room'
           name='Rooms'
           allowMultiple={false}
           dataSource={roomData}
