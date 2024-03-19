@@ -21,7 +21,7 @@ import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
 import { L10n, loadCldr } from "@syncfusion/ej2-base";
 import { Internationalization } from "@syncfusion/ej2-base";
 import { meetingRoomBookingData } from "@/lib/datasource";
-import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
+import { DataManager, UrlAdaptor } from "@syncfusion/ej2-data";
 
 L10n.load({
   "en-US": {
