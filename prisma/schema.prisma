@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_URL") // Replace with your Vercel Postgres connection URL
+  url      = env("POSTGRES_PRISMA_URL") // Replace with your Vercel Postgres connection URL
 }
 
 generator client {
