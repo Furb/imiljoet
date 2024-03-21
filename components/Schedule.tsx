@@ -1,5 +1,8 @@
 "use client";
-import { useEffect, useRef } from "react";
+
+import { db } from "@vercel/postgres"; // Connect to Vercel Postgres
+import { useState, useEffect } from "react";
+
 import {
   Inject,
   Day,
@@ -14,14 +17,10 @@ import {
   ViewsDirective,
   ViewDirective,
   Week,
-  PopupOpenEventArgs,
 } from "@syncfusion/ej2-react-schedule";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
-import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
+
 import { L10n, loadCldr } from "@syncfusion/ej2-base";
-import { Internationalization } from "@syncfusion/ej2-base";
-import { meetingRoomBookingData } from "@/lib/datasource";
-import { DataManager, UrlAdaptor } from "@syncfusion/ej2-data";
 
 L10n.load({
   "en-US": {
@@ -35,6 +34,17 @@ L10n.load({
 });
 
 const Schedule = () => {
+  const [bookings, setBookings] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      const fetchedBookings = await db.booking.findMany();
+      setBookings(fetchedBookings);
+    };
+
+    fetchBookings();
+  }, []);
+
   const roomData = [
     { RoomText: "Lille rum", Id: 1, RoomColor: "#ffaa00" },
     { RoomText: "Stor rum", Id: 2, RoomColor: "#f8a398" },
@@ -42,7 +52,7 @@ const Schedule = () => {
   ];
 
   const eventSettings: EventSettingsModel = {
-    dataSource: meetingRoomBookingData,
+    dataSource: bookings, // from the Vercel database
   };
 
   return (
