@@ -1,8 +1,5 @@
 "use client";
 
-import { db } from "@vercel/postgres"; // Connect to Vercel Postgres
-import { useState, useEffect } from "react";
-
 import {
   Inject,
   Day,
@@ -18,9 +15,9 @@ import {
   ViewDirective,
   Week,
 } from "@syncfusion/ej2-react-schedule";
-import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 
-import { L10n, loadCldr } from "@syncfusion/ej2-base";
+import { L10n } from "@syncfusion/ej2-base";
+import { meetingRoomBookingData } from "@/lib/datasource";
 
 L10n.load({
   "en-US": {
@@ -28,37 +25,40 @@ L10n.load({
       saveButton: "Confirm",
       cancelButton: "Close",
       deleteButton: "Remove",
-      newEvent: "Book Room",
+      newEvent: "Meeting rooms I Miljøet",
     },
   },
 });
 
 const Schedule = () => {
-  const [bookings, setBookings] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchBookings = async () => {
-      const fetchedBookings = await db.booking.findMany();
-      setBookings(fetchedBookings);
-    };
-
-    fetchBookings();
-  }, []);
-
   const roomData = [
-    { RoomText: "Lille rum", Id: 1, RoomColor: "#ffaa00" },
-    { RoomText: "Stor rum", Id: 2, RoomColor: "#f8a398" },
-    { RoomText: "Frokost rum", Id: 3, RoomColor: "#7499e1" },
+    { RoomText: "Room 1", Id: 1, RoomColor: "#ffaa00" },
+    { RoomText: "Room 2", Id: 2, RoomColor: "#f8a398" },
+    { RoomText: "Big room", Id: 3, RoomColor: "#7499e1" },
   ];
 
+  const fieldsData = {
+    id: "bookingId",
+    subject: {
+      name: "Booking",
+      title: "Who is booking",
+      default: "",
+    },
+    description: {
+      title: "Description (optional)",
+    },
+  };
+
   const eventSettings: EventSettingsModel = {
-    dataSource: bookings, // from the Vercel database
+    dataSource: meetingRoomBookingData,
+    fields: fieldsData,
   };
 
   return (
     <ScheduleComponent
       startHour='07:00'
       currentView='Week'
+      timeFormat='HH:mm'
       eventSettings={eventSettings}
     >
       <ViewsDirective>

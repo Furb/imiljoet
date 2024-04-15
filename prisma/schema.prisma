@@ -1,16 +1,27 @@
+
+
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // Replace with your Vercel Postgres connection URL
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 generator client {
-  provider = "typescript"
+  provider = "prisma-client-js"
 }
 
 model Booking {
-  id        Int      @id @default(autoincrement())
-  subject   String
-  startTime DateTime
-  endTime   DateTime
-  // Add other booking fields as needed
+  id                 Int      @id @default(autoincrement())
+  subject            String
+  startTime          DateTime
+  endTime            DateTime
+  isAllDay           Boolean  @default(false)
+  startTimezone      String?  // Optional fields for timezone information
+  endTimezone        String?
+  recurrenceRule     String?  // Optional fields for recurrence patterns
+  recurrenceID       Int?     @map("recurrence_id")
+  recurrenceException String? @map("recurrence_exception")
+  RoomId             Int      // Assuming a relation or just an identifier for now
+
+  @@map("schedule_event_datas") // Map to the actual table name if different
 }
