@@ -7,13 +7,13 @@ import {
   Agenda,
   ViewsDirective,
   ViewDirective,
-  BookingSettingsModel,
   ResourcesDirective,
   ResourceDirective,
   Inject,
   Resize,
   DragAndDrop,
-  PopupOpenBookingArgs,
+  EventSettingsModel,
+  PopupOpenEventArgs,
 } from "@syncfusion/ej2-react-schedule";
 import { DataManager, UrlAdaptor } from "@syncfusion/ej2-data";
 
@@ -55,12 +55,14 @@ export default function Scheduler() {
   };
 
   // Define event settings for the Scheduler using the state-managed data
-  const eventSettings: BookingSettingsModel = {
+  const eventSettings: EventSettingsModel = {
     dataSource: bookings,
     fields: fieldsData,
   };
 
-  const onPopupOpen = (args: PopupOpenBookingArgs): void => {
+  const onPopupOpen = (
+    args: import("@syncfusion/ej2-react-schedule").PopupOpenEventArgs
+  ): void => {
     if (args.type === "QuickInfo") {
       args.duration = 60;
       args.cancel = true;
