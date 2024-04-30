@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Darker_Grotesque } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const darker_font = Darker_Grotesque({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+  variable: "--darker-font",
+});
 
 export const metadata: Metadata = {
   title: "I Miljøet",
@@ -17,10 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='{inter.className} mx-8'>
-        <Header />
-        {children}
-      </body>
+      <body className='{darker_font.variable}'>{children}</body>
     </html>
   );
 }

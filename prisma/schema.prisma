@@ -1,27 +1,21 @@
 
 
-datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-model Booking {
-  id                 Int      @id @default(autoincrement())
-  subject            String
-  startTime          DateTime
-  endTime            DateTime
-  isAllDay           Boolean  @default(false)
-  startTimezone      String?  // Optional fields for timezone information
-  endTimezone        String?
-  recurrenceRule     String?  // Optional fields for recurrence patterns
-  recurrenceID       Int?     @map("recurrence_id")
-  recurrenceException String? @map("recurrence_exception")
-  RoomId             Int      // Assuming a relation or just an identifier for now
 
-  @@map("schedule_event_datas") // Map to the actual table name if different
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+}
+
+model Booking {
+  id Int @id @default(autoincrement()) @map("Id")
+  startTime    DateTime @map("StartTime")
+  endTime      DateTime @map("EndTime")
+  subject      String  @map("Subject")
+  roomId       String? @map("RoomId")
+  description  String? @map("Description")
 }

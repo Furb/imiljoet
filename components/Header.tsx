@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className='flex justify-between items-end pt-24 pb-4'>
-      <h1 className='uppercase text-4xl md:text-[8vw] md:tracking-wider leading-none'>
-        kontorkollektiv
-      </h1>
+    <header className='flex justify-between bg-white py-4 px-8 rounded-lg'>
+      <p className='uppercase'>Kontorkollektiv</p>
+      <Link href='#'>Kontakt</Link>
     </header>
   );
 };

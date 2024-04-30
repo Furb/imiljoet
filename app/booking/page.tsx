@@ -1,9 +1,9 @@
-import Schedule from "@/components/Schedule";
+import Scheduler from "@/components/Scheduler";
 
 export default function booking() {
   return (
     <main>
-      <Schedule />
+      <Scheduler />
     </main>
   );
 }
